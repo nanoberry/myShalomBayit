@@ -1,5 +1,5 @@
 from sqlmodel import SQLModel, Field
-from typing import Optional
+from typing import Literal, Optional
 from app.enums import ReligiosityLevel, City, SexCategory
 
 class User(SQLModel, table=True):
@@ -14,14 +14,12 @@ class User(SQLModel, table=True):
 class Post(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     user_id: int = Field(foreign_key="user.id")
-    post_type: str  # "has_apartment", "searching_apartment", "forming_group"
+    post_type: Literal["has_apartment", "searching_apartment", "forming_group"]
     
-    # Only used for "has_apartment" type
     apartment_description: Optional[str] = None
     room_description: Optional[str] = None
     contact_info: Optional[str] = None
 
-    # Filters (shared)
     num_roommates: Optional[int] = None
     religiosity_level: Optional[ReligiosityLevel] = None
 
